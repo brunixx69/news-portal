@@ -9,7 +9,7 @@ export const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Jensen Huang',
         date: new Date().toISOString(),
         category: 'IA',
-        imageUrl: 'https://images.unsplash.com/photo-1591405351990-4726e33df58d?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1587202376732-83090c1d8abc?auto=format&fit=crop&q=80&w=1200',
         source: { name: 'Hardware Insider', url: '#' }
     },
     {

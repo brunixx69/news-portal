@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Card,
     CardContent,
@@ -20,6 +20,8 @@ interface NewsCardProps {
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ article, loading, onClick }) => {
+    const [imgError, setImgError] = useState(false);
+
     if (loading || !article) {
         return (
             <Card className="cyber-card" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -42,6 +44,10 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, loading, onClick }) => {
         locale: es
     });
 
+    const displayImage = imgError
+        ? `https://via.placeholder.com/800x400/050505/00f3ff?text=${encodeURIComponent(article.category)}`
+        : (article.imageUrl || 'https://via.placeholder.com/800x400/050505/00f3ff?text=TechHub');
+
     return (
         <Card
             className="cyber-card"
@@ -58,8 +64,9 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, loading, onClick }) => {
             <CardMedia
                 component="img"
                 height="220"
-                image={article.imageUrl || 'https://via.placeholder.com/800x400?text=No+Image'}
+                image={displayImage}
                 alt={article.title}
+                onError={() => setImgError(true)}
                 sx={{
                     objectFit: 'cover',
                     transition: 'transform 0.5s ease',

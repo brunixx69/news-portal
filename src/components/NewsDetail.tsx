@@ -19,6 +19,7 @@ interface NewsDetailProps {
 
 const NewsDetail: React.FC<NewsDetailProps> = ({ article, onBack }) => {
     const [scrollProgress, setScrollProgress] = useState(0);
+    const [imgError, setImgError] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -30,6 +31,10 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ article, onBack }) => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const displayImage = imgError
+        ? `https://via.placeholder.com/1200x600/050505/00f3ff?text=${encodeURIComponent(article.title)}`
+        : (article.imageUrl || 'https://via.placeholder.com/1200x600/050505/00f3ff?text=TechHub');
 
     return (
         <Box sx={{ bgcolor: 'var(--bg-dark)', color: '#fff', minHeight: '100vh', pt: 8 }}>
@@ -96,8 +101,9 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ article, onBack }) => {
 
                     <Box
                         component="img"
-                        src={article.imageUrl}
+                        src={displayImage}
                         alt={article.title}
+                        onError={() => setImgError(true)}
                         sx={{
                             width: '100%',
                             height: { xs: '300px', md: '500px' },
