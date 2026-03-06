@@ -10,28 +10,26 @@ const SkeletonCard: React.FC = () => {
                 flexDirection: 'column',
                 bgcolor: 'var(--bg-card)',
                 border: '1px solid rgba(255,255,255,0.05)',
-                borderRadius: '12px'
+                borderRadius: '12px',
+                overflow: 'hidden'
             }}
         >
-            <Skeleton
-                variant="rectangular"
-                height={220}
-                sx={{ bgcolor: 'rgba(255,255,255,0.05)' }}
-            />
+            <Box className="skeleton-anim" sx={{ height: 220, width: '100%' }} />
             <CardContent sx={{ flexGrow: 1, p: 3 }}>
                 <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between' }}>
-                    <Skeleton width={60} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
-                    <Skeleton width={80} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
+                    <Box className="skeleton-anim" sx={{ width: 60, height: 20, borderRadius: 1 }} />
+                    <Box className="skeleton-anim" sx={{ width: 80, height: 20, borderRadius: 1 }} />
                 </Box>
-                <Skeleton variant="text" height={32} width="90%" sx={{ mb: 1, bgcolor: 'rgba(255,255,255,0.05)' }} />
-                <Skeleton variant="text" height={32} width="80%" sx={{ mb: 2, bgcolor: 'rgba(255,255,255,0.05)' }} />
-                <Skeleton variant="text" height={20} width="100%" sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
-                <Skeleton variant="text" height={20} width="95%" sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
-                <Skeleton variant="text" height={20} width="40%" sx={{ mb: 3, bgcolor: 'rgba(255,255,255,0.05)' }} />
+                <Box className="skeleton-anim" sx={{ height: 28, width: '90%', mb: 1, borderRadius: 1 }} />
+                <Box className="skeleton-anim" sx={{ height: 28, width: '70%', mb: 3, borderRadius: 1 }} />
+
+                <Box className="skeleton-anim" sx={{ height: 16, width: '100%', mb: 1, borderRadius: 1 }} />
+                <Box className="skeleton-anim" sx={{ height: 16, width: '100%', mb: 1, borderRadius: 1 }} />
+                <Box className="skeleton-anim" sx={{ height: 16, width: '40%', mb: 4, borderRadius: 1 }} />
 
                 <Box sx={{ mt: 'auto', pt: 2, display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                    <Skeleton width={100} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
-                    <Skeleton width={60} height={20} sx={{ bgcolor: 'rgba(255,255,255,0.05)' }} />
+                    <Box className="skeleton-anim" sx={{ width: 100, height: 16, borderRadius: 1 }} />
+                    <Box className="skeleton-anim" sx={{ width: 60, height: 16, borderRadius: 1 }} />
                 </Box>
             </CardContent>
         </Card>

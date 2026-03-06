@@ -12,16 +12,34 @@ import { Article } from '../types/news';
 import SafeImage from './SafeImage';
 import '../styles/cyberpunk.css';
 
+import FlashOnIcon from '@mui/icons-material/FlashOn';
+
 interface NewsCardProps {
     article: Article;
     onClick: (article: Article) => void;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ article, onClick }) => {
-    const timeAgo = formatDistanceToNow(new Date(article.date), {
-        addSuffix: true,
-        locale: es
-    });
+    const [imageError, setImageError] = React.useState(false);
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+
+        // Relative time logic for "Hace X horas"
+        const now = new Date();
+        const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+
+        if (diffInHours < 24 && diffInHours > 0) {
+            return `Hace ${diffInHours} ${diffInHours === 1 ? 'hora' : 'horas'}`;
+        }
+
+        // Intl.DateTimeFormat for "05 de Marzo, 2024"
+        return new Intl.DateTimeFormat('es-ES', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        }).format(date);
+    };
 
     return (
         <Card
@@ -42,17 +60,53 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onClick }) => {
                     transform: 'translateY(-10px)',
                     borderColor: 'var(--neon-cyan)',
                     boxShadow: '0 0 20px var(--neon-cyan-soft)',
-                    '& .card-image': { transform: 'scale(1.1)' }
+                    '& .card-image': { transform: 'scale(1.1)' },
+                    '& .fallback-icon': { transform: 'scale(1.2) rotate(10deg)' }
                 }
             }}
         >
-            <SafeImage
-                src={article.imageUrl}
-                alt={article.title}
-                height={220}
-                category={article.category}
-                className="card-image"
-            />
+            <Box sx={{ position: 'relative', height: 220, overflow: 'hidden', bgcolor: 'rgba(0,0,0,0.3)' }}>
+                {imageError ? (
+                    <Box
+                        sx={{
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: 'linear-gradient(135deg, #050505 0%, #1a1a1a 100%)',
+                            gap: 1
+                        }}
+                    >
+                        <FlashOnIcon
+                            className="fallback-icon"
+                            sx={{
+                                fontSize: 60,
+                                color: 'var(--neon-cyan)',
+                                filter: 'drop-shadow(0 0 10px var(--neon-cyan))',
+                                transition: 'transform 0.5s ease'
+                            }}
+                        />
+                        <Typography variant="overline" sx={{ color: 'var(--neon-cyan)', fontWeight: 900, letterSpacing: 2 }}>
+                            TECH HUB
+                        </Typography>
+                    </Box>
+                ) : (
+                    <Box
+                        component="img"
+                        src={article.imageUrl}
+                        alt={article.title}
+                        onError={() => setImageError(true)}
+                        className="card-image"
+                        sx={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            transition: 'transform 0.5s ease'
+                        }}
+                    />
+                )}
+            </Box>
 
             <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 3 }}>
                 <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -66,8 +120,8 @@ const NewsCard: React.FC<NewsCardProps> = ({ article, onClick }) => {
                             fontSize: '0.6rem'
                         }}
                     />
-                    <Typography variant="caption" sx={{ color: 'var(--neon-cyan)', opacity: 0.8 }}>
-                        {timeAgo}
+                    <Typography variant="caption" sx={{ color: 'var(--neon-cyan)', opacity: 0.8, fontWeight: 700 }}>
+                        {formatDate(article.date)}
                     </Typography>
                 </Box>
 

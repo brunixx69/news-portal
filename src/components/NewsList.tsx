@@ -18,7 +18,7 @@ const NewsList: React.FC<NewsListProps> = ({ onArticleClick }) => {
     if (isLoading) {
         return (
             <Box className="news-grid">
-                {[...Array(8)].map((_, i) => <SkeletonCard key={i} />)}
+                {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
             </Box>
         );
     }
