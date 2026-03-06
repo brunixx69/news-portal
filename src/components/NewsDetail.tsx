@@ -37,14 +37,29 @@ const NewsDetail: React.FC<NewsDetailProps> = ({ article, onBack }) => {
         : (article.imageUrl || 'https://via.placeholder.com/1200x600/050505/00f3ff?text=TechHub');
 
     return (
-        <Box sx={{ bgcolor: 'var(--bg-dark)', color: '#fff', minHeight: '100vh', pt: 8 }}>
-            {/* Reading Progress Bar */}
-            <div className="progress-bar-container">
-                <div
-                    className="progress-bar-fill"
-                    style={{ width: `${scrollProgress}%` }}
+        <Box sx={{ bgcolor: 'var(--bg-dark)', color: '#fff', minHeight: '100vh', pt: 4 }}>
+            {/* Reading Progress Bar - Top Sticky */}
+            <Box
+                sx={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: 4,
+                    zIndex: 2000,
+                    bgcolor: 'rgba(255,255,255,0.05)'
+                }}
+            >
+                <Box
+                    sx={{
+                        height: '100%',
+                        width: `${scrollProgress}%`,
+                        background: 'var(--cyber-gradient)',
+                        boxShadow: '0 0 15px var(--neon-cyan)',
+                        transition: 'width 0.1s ease-out'
+                    }}
                 />
-            </div>
+            </Box>
 
             <Container maxWidth="md">
                 <Button

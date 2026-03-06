@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import GamesIcon from '@mui/icons-material/Games';
+import FlashOnIcon from '@mui/icons-material/FlashOn';
 import { useAppContext } from '../context/AppContext';
 import '../styles/cyberpunk.css';
 
@@ -44,22 +45,21 @@ const Header: React.FC = () => {
             <Container maxWidth="lg">
                 <Toolbar disableGutters sx={{ gap: 2, py: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-                        <GamesIcon sx={{ mr: 1, color: 'var(--neon-magenta)', filter: 'drop-shadow(0 0 5px var(--neon-magenta))' }} />
-                        {!isMobile && (
-                            <Typography
-                                variant="h5"
-                                noWrap
-                                component="div"
-                                sx={{
-                                    fontWeight: 900,
-                                    color: '#fff',
-                                    letterSpacing: -1,
-                                    textTransform: 'uppercase'
-                                }}
-                            >
-                                NEON<Box component="span" sx={{ color: 'var(--neon-cyan)', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>HUB</Box>
-                            </Typography>
-                        )}
+                        <FlashOnIcon sx={{ mr: 1, color: 'var(--neon-cyan)', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }} />
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="div"
+                            sx={{
+                                fontWeight: 950,
+                                color: '#fff',
+                                letterSpacing: -1,
+                                textTransform: 'uppercase',
+                                display: { xs: 'none', sm: 'block' }
+                            }}
+                        >
+                            TECH<Box component="span" sx={{ color: 'var(--neon-magenta)', filter: 'drop-shadow(0 0 5px var(--neon-magenta))' }}>HUB</Box>
+                        </Typography>
                     </Box>
 
                     <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>

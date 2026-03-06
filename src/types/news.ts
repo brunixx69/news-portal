@@ -1,4 +1,4 @@
-export type Category = 'IA' | 'Software' | 'Hardware' | 'Cyberpunk' | 'Mercado' | 'Tendencias';
+export type CategoryType = 'IA' | 'Software' | 'Hardware' | 'Cyberpunk' | 'Mercado' | 'Tendencias';
 
 export interface Article {
   id: string;
@@ -7,7 +7,7 @@ export interface Article {
   content: string;
   author: string;
   date: string;
-  category: Category;
+  category: CategoryType;
   imageUrl: string;
   url?: string;
   source?: {
@@ -16,7 +16,7 @@ export interface Article {
   };
 }
 
-export interface GNewsResponse {
+export interface APIResponse {
   totalArticles: number;
   articles: Article[];
 }

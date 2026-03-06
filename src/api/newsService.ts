@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { Article, Category, GNewsResponse } from '../types/news';
+import { Article, CategoryType, APIResponse } from '../types/news';
 import { MOCK_NEWS } from './mockNews';
 
 const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
 const BASE_URL = 'https://gnews.io/api/v4/top-headlines';
 
 export const newsService = {
-    fetchNews: async (category: Category, query?: string): Promise<Article[]> => {
-        // Map internal categories to GNews topics or search queries
+    fetchNews: async (category: CategoryType, query?: string): Promise<Article[]> => {
         const topic = category === 'Hardware' || category === 'Software' ? 'technology' :
             category === 'Mercado' ? 'business' : 'world';
 
@@ -16,7 +15,7 @@ export const newsService = {
         try {
             if (!API_KEY) throw new Error('API Key missing');
 
-            const response = await axios.get<GNewsResponse>(BASE_URL, {
+            const response = await axios.get<APIResponse>(BASE_URL, {
                 params: {
                     category: topic,
                     q: searchQuery,
@@ -24,22 +23,17 @@ export const newsService = {
                     lang: 'es',
                 },
             });
-            return response.data.articles.map(article => ({ ...article, category }));
+            return response.data.articles.map(article => ({
+                ...article,
+                category,
+                id: article.url || Math.random().toString(36).substr(2, 9)
+            }));
         } catch (error) {
-            console.error(`GNews API Error for category "${category}":`, error);
-
-            // Filter mock data by category
-            const filteredMock = MOCK_NEWS.filter(
-                a => a.category === category || category === 'Tendencias'
+            console.error(`GNews API Error:`, error);
+            return MOCK_NEWS.filter(a =>
+                (category === 'Tendencias' || a.category === category) &&
+                (!query || a.title.toLowerCase().includes(query.toLowerCase()))
             );
-
-            // If filter returns nothing, return at least 3 generic/recent news items
-            if (filteredMock.length === 0) {
-                console.warn(`No mock news found for category "${category}", returning default items.`);
-                return MOCK_NEWS.slice(0, 3);
-            }
-
-            return filteredMock;
         }
     },
 };

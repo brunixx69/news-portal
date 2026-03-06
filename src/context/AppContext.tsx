@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { Category } from '../types/news';
+import { CategoryType } from '../types/news';
 import { PaletteMode } from '@mui/material';
 
 interface AppContextType {
-    category: Category;
-    setCategory: (category: Category) => void;
+    category: CategoryType;
+    setCategory: (category: CategoryType) => void;
     themeMode: PaletteMode;
     toggleTheme: () => void;
     searchQuery: string;
@@ -15,7 +15,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     // Category State
-    const [category, setCategory] = useState<Category>('IA');
+    const [category, setCategory] = useState<CategoryType>('IA');
 
     // Theme State with persistence
     const [themeMode, setThemeMode] = useState<PaletteMode>(() => {

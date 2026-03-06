@@ -1,10 +1,10 @@
 import React from 'react';
-import { Grid, Box, Typography, Alert } from '@mui/material';
+import { Box, Typography, Alert } from '@mui/material';
 import { useAppContext } from '../context/AppContext';
 import { useNews } from '../hooks/useNews';
 import { Article } from '../types/news';
 import NewsCard from './NewsCard';
-import SkeletonScreen from './SkeletonScreen';
+import SkeletonCard from './SkeletonCard';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 interface NewsListProps {
@@ -13,43 +13,50 @@ interface NewsListProps {
 
 const NewsList: React.FC<NewsListProps> = ({ onArticleClick }) => {
     const { category, searchQuery } = useAppContext();
-
     const { data: articles, isLoading, error } = useNews(category, searchQuery);
 
     if (isLoading) {
-        return <SkeletonScreen />;
+        return (
+            <Box className="news-grid">
+                {[...Array(8)].map((_, i) => <SkeletonCard key={i} />)}
+            </Box>
+        );
     }
 
     if (error) {
         return (
-            <Alert severity="error" sx={{ mt: 2, bgcolor: 'rgba(255,0,0,0.1)', color: '#ff4444', border: '1px solid #ff4444' }}>
-                No se pudieron cargar las noticias. Por favor, intenta de nuevo más tarde.
-            </Alert>
+            <Box sx={{ p: 4, maxWidth: 'lg', mx: 'auto' }}>
+                <Alert severity="error" sx={{ bgcolor: 'rgba(255,0,0,0.1)', color: '#ff4444', border: '1px solid #ff4444' }}>
+                    SABOTAJE EN LA RED: No se pudieron cargar las noticias.
+                </Alert>
+            </Box>
         );
     }
 
     if (!articles || articles.length === 0) {
         return (
-            <Box sx={{ mt: 8, textAlign: 'center', py: 4 }}>
-                <SearchOffIcon sx={{ fontSize: 64, color: 'var(--neon-cyan)', mb: 2, opacity: 0.5 }} />
-                <Typography variant="h5" sx={{ fontWeight: 700, color: '#fff' }}>
-                    No encontramos nada para "{searchQuery || category}"
+            <Box sx={{ mt: 8, textAlign: 'center', py: 8 }}>
+                <SearchOffIcon sx={{ fontSize: 80, color: 'var(--neon-cyan)', mb: 2, opacity: 0.5 }} />
+                <Typography variant="h4" className="cyber-text-gradient" gutterBottom>
+                    VACÍO EN EL CIBERESPACIO
                 </Typography>
-                <Typography variant="body1" sx={{ mt: 1, color: 'rgba(255,255,255,0.6)' }}>
-                    Prueba con otra categoría o términos de búsqueda diferentes.
+                <Typography variant="body1" sx={{ color: 'var(--text-secondary)' }}>
+                    No hay señales de "{searchQuery || category}". Prueba otros términos.
                 </Typography>
             </Box>
         );
     }
 
     return (
-        <Grid container spacing={4}>
+        <Box className="news-grid">
             {articles.map((article: Article) => (
-                <Grid item key={article.id} xs={12} sm={6} md={4}>
-                    <NewsCard article={article} onClick={onArticleClick} />
-                </Grid>
+                <NewsCard
+                    key={article.id}
+                    article={article}
+                    onClick={onArticleClick}
+                />
             ))}
-        </Grid>
+        </Box>
     );
 };
 

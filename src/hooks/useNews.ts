@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchArticles } from '../api/mockNewsApi';
-import { Category } from '../types/news';
+import { newsService } from '../api/newsService';
+import { CategoryType } from '../types/news';
 
-export const useNews = (category: Category, query?: string) => {
+export const useNews = (category: CategoryType, query?: string) => {
     return useQuery({
         queryKey: ['news', category, query],
-        queryFn: () => fetchArticles(category, query),
+        queryFn: () => newsService.fetchNews(category, query),
         staleTime: 1000 * 60 * 5, // 5 minutes
         refetchOnWindowFocus: false,
         retry: 1,
