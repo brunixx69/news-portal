@@ -15,7 +15,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     // Category State
-    const [category, setCategory] = useState<Category>('Hardware');
+    const [category, setCategory] = useState<Category>('IA');
 
     // Theme State with persistence
     const [themeMode, setThemeMode] = useState<PaletteMode>(() => {

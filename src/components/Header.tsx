@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -7,18 +7,16 @@ import {
     Box,
     TextField,
     InputAdornment,
-    IconButton,
-    useTheme,
-    useMediaQuery
+    useMediaQuery,
+    useTheme
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
+import GamesIcon from '@mui/icons-material/Games';
 import { useAppContext } from '../context/AppContext';
+import '../styles/cyberpunk.css';
 
 const Header: React.FC = () => {
-    const { toggleTheme, themeMode, setSearchQuery } = useAppContext();
+    const { setSearchQuery } = useAppContext();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [localSearch, setLocalSearch] = useState('');
@@ -33,19 +31,33 @@ const Header: React.FC = () => {
     }, [localSearch, setSearchQuery]);
 
     return (
-        <AppBar position="sticky" elevation={0} sx={{ borderBottom: '1px solid', borderColor: 'divider' }}>
+        <AppBar
+            position="sticky"
+            elevation={0}
+            className="glass-morphism"
+            sx={{
+                bgcolor: 'rgba(5, 5, 5, 0.8) !important',
+                borderBottom: '1px solid rgba(0, 243, 255, 0.3)',
+                zIndex: 1100
+            }}
+        >
             <Container maxWidth="lg">
-                <Toolbar disableGutters sx={{ gap: 2 }}>
+                <Toolbar disableGutters sx={{ gap: 2, py: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-                        <NewspaperIcon sx={{ display: { xs: 'flex', md: 'flex' }, mr: 1, color: 'primary.main' }} />
+                        <GamesIcon sx={{ mr: 1, color: 'var(--neon-magenta)', filter: 'drop-shadow(0 0 5px var(--neon-magenta))' }} />
                         {!isMobile && (
                             <Typography
-                                variant="h6"
+                                variant="h5"
                                 noWrap
                                 component="div"
-                                sx={{ fontWeight: 'bold', color: 'primary.main', letterSpacing: -0.5 }}
+                                sx={{
+                                    fontWeight: 900,
+                                    color: '#fff',
+                                    letterSpacing: -1,
+                                    textTransform: 'uppercase'
+                                }}
                             >
-                                TECH<Box component="span" sx={{ color: 'text.primary', ml: 0.5 }}>HUB</Box>
+                                NEON<Box component="span" sx={{ color: 'var(--neon-cyan)', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>HUB</Box>
                             </Typography>
                         )}
                     </Box>
@@ -54,32 +66,40 @@ const Header: React.FC = () => {
                         <TextField
                             fullWidth
                             size="small"
-                            placeholder="Buscar noticias..."
+                            placeholder="BUSCAR EN LA RED..."
                             value={localSearch}
                             onChange={(e) => setLocalSearch(e.target.value)}
                             sx={{
                                 maxWidth: 500,
                                 '& .MuiOutlinedInput-root': {
-                                    borderRadius: 50,
-                                    bgcolor: theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.05)',
-                                    '& fieldset': { border: 'none' },
-                                    '&:hover fieldset': { border: 'none' },
-                                    '&.Mui-focused fieldset': { border: '1px solid', borderColor: 'primary.main' },
+                                    borderRadius: 0,
+                                    bgcolor: 'rgba(255,255,255,0.03)',
+                                    color: 'var(--neon-cyan)',
+                                    fontWeight: 700,
+                                    fontSize: '0.8rem',
+                                    '& fieldset': { border: '1px solid rgba(0, 243, 255, 0.2)' },
+                                    '&:hover fieldset': { borderColor: 'var(--neon-cyan)' },
+                                    '&.Mui-focused fieldset': {
+                                        borderColor: 'var(--neon-magenta)',
+                                        boxShadow: '0 0 10px var(--neon-magenta)'
+                                    },
+                                },
+                                '& input::placeholder': {
+                                    color: 'rgba(0, 243, 255, 0.3)',
+                                    opacity: 1
                                 }
                             }}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <SearchIcon sx={{ color: 'text.secondary' }} />
+                                        <SearchIcon sx={{ color: 'var(--neon-cyan)' }} />
                                     </InputAdornment>
                                 ),
                             }}
                         />
                     </Box>
 
-                    <IconButton onClick={toggleTheme} color="inherit" sx={{ ml: 'auto' }}>
-                        {themeMode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                    </IconButton>
+                    <Box sx={{ width: { xs: 0, md: 50 }, ml: 'auto' }} />
                 </Toolbar>
             </Container>
         </AppBar>
