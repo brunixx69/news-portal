@@ -25,9 +25,32 @@ const NewsList: React.FC<NewsListProps> = ({ onArticleClick }) => {
 
     if (error) {
         return (
-            <Box sx={{ p: 4, maxWidth: 'lg', mx: 'auto' }}>
-                <Alert severity="error" sx={{ bgcolor: 'rgba(255,0,0,0.1)', color: '#ff4444', border: '1px solid #ff4444' }}>
-                    SABOTAJE EN LA RED: No se pudieron cargar las noticias.
+            <Box
+                sx={{
+                    p: 6,
+                    textAlign: 'center',
+                    bgcolor: 'rgba(255, 0, 0, 0.05)',
+                    borderRadius: '16px',
+                    border: '1px solid rgba(255, 0, 255, 0.2)',
+                    mt: 4
+                }}
+            >
+                <Typography variant="h5" sx={{ color: 'var(--neon-magenta)', fontWeight: 900, mb: 2 }}>
+                    CONEXIÓN INTERRUMPIDA
+                </Typography>
+                <Typography variant="body1" sx={{ color: 'var(--text-secondary)', mb: 3 }}>
+                    No pudimos sincronizar con la red de noticias en este momento.
+                </Typography>
+                <Alert
+                    severity="info"
+                    sx={{
+                        bgcolor: 'rgba(0, 243, 255, 0.05)',
+                        color: 'var(--neon-cyan)',
+                        border: '1px solid rgba(0, 243, 255, 0.2)',
+                        '& .MuiAlert-icon': { color: 'var(--neon-cyan)' }
+                    }}
+                >
+                    Estamos utilizando datos de respaldo (Mock Data) para mantener el servicio activo.
                 </Alert>
             </Box>
         );
