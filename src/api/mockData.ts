@@ -1,6 +1,6 @@
-import { NewsArticle } from '../types/news';
+import { Article } from '../types/news';
 
-export const MOCK_ARTICLES: NewsArticle[] = [
+export const MOCK_ARTICLES: Article[] = [
     {
         id: '1',
         title: 'NVIDIA Blackwell: El amanecer de la IA Generativa',

@@ -10,13 +10,13 @@ import {
 } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { NewsArticle } from '../types/news';
+import { Article } from '../types/news';
 import '../styles/cyberpunk.css';
 
 interface NewsCardProps {
-    article?: NewsArticle;
+    article?: Article;
     loading?: boolean;
-    onClick?: (article: NewsArticle) => void;
+    onClick?: (article: Article) => void;
 }
 
 const NewsCard: React.FC<NewsCardProps> = ({ article, loading, onClick }) => {

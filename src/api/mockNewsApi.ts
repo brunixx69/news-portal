@@ -1,4 +1,4 @@
-import { NewsArticle, Category } from '../types/news';
+import { Article, Category } from '../types/news';
 import { MOCK_ARTICLES } from './mockData';
 
 /**
@@ -8,7 +8,7 @@ import { MOCK_ARTICLES } from './mockData';
 export const fetchArticles = async (
     category?: Category,
     searchQuery?: string
-): Promise<NewsArticle[]> => {
+): Promise<Article[]> => {
     // Simulate network delay (800ms to 1500ms)
     await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 700));
 

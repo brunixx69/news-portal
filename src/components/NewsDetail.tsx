@@ -9,11 +9,11 @@ import {
     Avatar
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { NewsArticle } from '../types/news';
+import { Article } from '../types/news';
 import '../styles/cyberpunk.css';
 
 interface NewsDetailProps {
-    article: NewsArticle;
+    article: Article;
     onBack: () => void;
 }
 

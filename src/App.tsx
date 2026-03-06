@@ -14,12 +14,12 @@ import NewsList from './components/NewsList';
 import CategoryTabs from './components/CategoryTabs';
 import Header from './components/Header';
 import NewsDetail from './components/NewsDetail';
-import { NewsArticle } from './types/news';
+import { Article } from './types/news';
 import './styles/cyberpunk.css';
 
 const AppContent: React.FC = () => {
     const { themeMode } = useAppContext();
-    const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null);
+    const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
     // Override MUI theme for Cyberpunk feel
     const theme = useMemo(() => createTheme({
@@ -38,7 +38,7 @@ const AppContent: React.FC = () => {
         },
     }), []);
 
-    const handleArticleClick = (article: NewsArticle) => {
+    const handleArticleClick = (article: Article) => {
         setSelectedArticle(article);
         window.scrollTo(0, 0);
     };

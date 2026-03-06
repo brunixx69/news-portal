@@ -2,13 +2,13 @@ import React from 'react';
 import { Grid, Box, Typography, Alert } from '@mui/material';
 import { useAppContext } from '../context/AppContext';
 import { useNews } from '../hooks/useNews';
-import { NewsArticle } from '../types/news';
+import { Article } from '../types/news';
 import NewsCard from './NewsCard';
 import SkeletonScreen from './SkeletonScreen';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 
 interface NewsListProps {
-    onArticleClick: (article: NewsArticle) => void;
+    onArticleClick: (article: Article) => void;
 }
 
 const NewsList: React.FC<NewsListProps> = ({ onArticleClick }) => {
@@ -44,7 +44,7 @@ const NewsList: React.FC<NewsListProps> = ({ onArticleClick }) => {
 
     return (
         <Grid container spacing={4}>
-            {articles.map((article: NewsArticle) => (
+            {articles.map((article: Article) => (
                 <Grid item key={article.id} xs={12} sm={6} md={4}>
                     <NewsCard article={article} onClick={onArticleClick} />
                 </Grid>

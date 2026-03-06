@@ -1,6 +1,6 @@
 export type Category = 'IA' | 'Software' | 'Hardware' | 'Cyberpunk' | 'Mercado' | 'Tendencias';
 
-export interface NewsArticle {
+export interface Article {
   id: string;
   title: string;
   description: string;
@@ -18,5 +18,5 @@ export interface NewsArticle {
 
 export interface GNewsResponse {
   totalArticles: number;
-  articles: NewsArticle[];
+  articles: Article[];
 }
