@@ -3,8 +3,7 @@ import { Article, CategoryType, APIResponse, GNewsArticle } from '../types/news'
 import { MOCK_NEWS } from './mockNews';
 
 // Using the requested convention for Vite environment variables
-const API_KEY = import.meta.env.VITE_API_KEY || import.meta.env.VITE_GNEWS_API_KEY;
-const BASE_URL = 'https://gnews.io/api/v4/top-headlines'; // Secure Protocol confirmed
+const BASE_URL = '/api/news'; // Internal Vercel Proxy
 
 export const newsService = {
     fetchNews: async (category: CategoryType, query?: string): Promise<Article[]> => {
@@ -14,22 +13,19 @@ export const newsService = {
         const searchQuery = query || (category === 'Hardware' ? 'hardware' : '');
 
         try {
-            if (!API_KEY) {
-                console.warn('CRITICAL: API Key is missing in environment variables.');
-                throw new Error('CONFIG_ERROR');
-            }
-
+            // Internal call to Vercel Serverless Function
             const response = await axios.get<APIResponse>(BASE_URL, {
                 params: {
                     category: topic,
                     q: searchQuery,
-                    apikey: API_KEY,
-                    lang: 'es',
                 },
-                timeout: 10000, // 10s timeout for stability
+                timeout: 10000,
             });
 
-            // Map GNews response to internal Article interface safely
+            if (!response.data.articles) {
+                throw new Error('MALFORMED_RESPONSE');
+            }
+
             return response.data.articles.map((article: GNewsArticle) => ({
                 id: article.url || Math.random().toString(36).substr(2, 9),
                 title: article.title,
@@ -45,7 +41,8 @@ export const newsService = {
         } catch (error) {
             newsService.handleApiError(error);
 
-            // Fallback to mock data for a seamless user experience
+            // Robust Fallback: Always return Mock Data on failure to prevent empty UI
+            console.log('Using fallback data due to API failure...');
             return MOCK_NEWS.filter(a =>
                 (category === 'Tendencias' || a.category === category) &&
                 (!query || a.title.toLowerCase().includes(query.toLowerCase()))
